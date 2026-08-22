@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoxGuard AI - Analysis Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#393841",
+                        "on-primary": "#1000a9",
+                        "tertiary": "#ffb783",
+                        "error-container": "#93000a",
+                        "surface": "#13131b",
+                        "on-error": "#690005",
+                        "secondary-fixed-dim": "#c0c1ff",
+                        "primary-fixed": "#e1e0ff",
+                        "on-secondary": "#292a60",
+                        "tertiary-fixed": "#ffdcc5",
+                        "secondary-fixed": "#e1e0ff",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "surface-container-high": "#292932",
+                        "inverse-on-surface": "#303038",
+                        "secondary-container": "#42447b",
+                        "on-tertiary-container": "#452000",
+                        "on-secondary-fixed-variant": "#404178",
+                        "primary-container": "#8083ff",
+                        "tertiary-container": "#d97721",
+                        "on-primary-fixed": "#07006c",
+                        "on-primary-container": "#0d0096",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "outline": "#908fa0",
+                        "on-surface": "#e4e1ed",
+                        "surface-container-low": "#1b1b23",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-secondary-fixed": "#13144a",
+                        "on-tertiary-fixed-variant": "#703700",
+                        "on-secondary-container": "#b2b3f2",
+                        "on-tertiary": "#4f2500",
+                        "primary": "#c0c1ff",
+                        "surface-dim": "#13131b",
+                        "surface-container-highest": "#34343d",
+                        "surface-tint": "#c0c1ff",
+                        "surface-variant": "#34343d",
+                        "background": "#13131b",
+                        "surface-container": "#1f1f27",
+                        "inverse-surface": "#e4e1ed",
+                        "secondary": "#c0c1ff",
+                        "outline-variant": "#464554",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "surface-container-lowest": "#0d0d15",
+                        "on-tertiary-fixed": "#301400",
+                        "inverse-primary": "#494bd6",
+                        "on-background": "#e4e1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sidebar-width": "260px",
+                        "gutter": "16px",
+                        "margin": "24px",
+                        "container-max": "1440px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-sm": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+
+        .wave-bar {
+            animation: wave 1.2s ease-in-out infinite;
+            transform-origin: bottom;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.2); }
+            50% { transform: scaleY(1); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+<main class="flex-1 flex flex-col h-screen overflow-hidden p-margin items-center justify-center relative">
+<div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(to right, #27272a 1px, transparent 1px), linear-gradient(to bottom, #27272a 1px, transparent 1px); background-size: 32px 32px;"></div>
+<div class="w-full max-w-4xl z-10 flex flex-col gap-8">
+<div class="text-center mb-4">
+<h1 class="font-display text-display text-primary mb-2 tracking-tight">Real-Time Forensic Analysis</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Case ID: V-492-X | Source: Subject_Alpha_01.wav</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="col-span-1 bg-surface-container border border-outline-variant rounded-lg p-6 flex flex-col gap-6">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant uppercase border-b border-outline-variant pb-2 mb-2">Analysis Pipeline</h2>
+<ul class="flex flex-col gap-4 font-body-sm text-body-sm">
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Preparing Audio</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Checking Audio Quality</span>
+</li>
+<li class="flex items-center gap-3 text-primary font-bold bg-surface-container-high -mx-4 px-4 py-2 border-l-2 border-primary rounded-r">
+<span class="material-symbols-outlined pulse text-[20px]">sync</span>
+<span>Analyzing Voice Characteristics</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface-variant opacity-50">
+<span class="material-symbols-outlined text-[20px]">pending</span>
+<span>Generating Verdict</span>
+</li>
+</ul>
+</div>
+<div class="col-span-1 md:col-span-2 bg-surface border border-outline-variant rounded-lg flex flex-col relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full p-4 flex justify-between items-center border-b border-outline-variant z-20 bg-surface/80 backdrop-blur-sm">
+<span class="font-label-sm text-label-sm text-primary uppercase">Spectral Activity</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Live Feed</span>
+</div>
+</div>
+<div class="flex-1 flex items-end justify-center p-8 gap-1 h-64 mt-12 relative">
+<div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(to right, #464554 1px, transparent 1px); background-size: 10% 100%;"></div>
+<div class="flex items-end gap-[2px] w-full h-full justify-center z-10 px-4" id="waveform-container">
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full bg-surface-container-high border-t border-outline-variant p-4 z-20">
+<div class="flex justify-between items-end mb-2">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface">Analysis in progress: <span class="text-primary font-bold">68%</span> complete.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Analyzing spectral speech characteristics...</span>
+</div>
+<span class="font-label-md text-label-md text-primary">00:00:14 / 00:00:20</span>
+</div>
+<div class="w-full bg-background h-2 rounded-full overflow-hidden border border-outline-variant">
+<div class="bg-primary h-full progress-bar-fill w-[68%] relative">
+<div class="absolute inset-0 bg-white opacity-20 w-full h-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-2 block">Sample Rate</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">44.1 kHz</span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-2 block">Bit Depth</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">24-bit</span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-2 block">Noise Floor</span>
+<span class="font-label-md text-label-md text-primary font-bold">-72 dBFS</span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-2 block">Current Process</span>
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">MFCC Extraction</span>
+</div>
+</div>
+<div class="flex justify-center mt-4">
+<button class="border border-outline-variant text-on-surface font-body-sm font-bold py-2 px-6 rounded hover:bg-surface-container-low hover:border-on-surface transition-colors duration-200">
+                    Cancel Analysis
+                </button>
+</div>
+</div>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('waveform-container');
+            const numBars = 64;
+            
+            for (let i = 0; i < numBars; i++) {
+                const bar = document.createElement('div');
+                bar.classList.add('bg-primary', 'w-full', 'rounded-t-sm', 'wave-bar');
+                
+                const heightBasis = Math.random() * 80 + 10;
+                bar.style.height = `${heightBasis}%`;
+                
+                bar.style.animationDelay = `${Math.random() * -1.2}s`;
+                
+                bar.style.animationDuration = `${Math.random() * 0.8 + 0.6}s`;
+                
+                if (i > numBars * 0.2 && i < numBars * 0.8) {
+                    if (Math.random() > 0.7) {
+                        bar.classList.remove('bg-primary');
+                        bar.classList.add('bg-secondary-fixed-dim');
+                    }
+                }
+
+                container.appendChild(bar);
+            }
+        });
+    </script>
+</body></html>
