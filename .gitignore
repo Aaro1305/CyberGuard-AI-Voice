@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 cyberguard_history.db
 uploads/
+*.pdf
+temp_spectrogram.png
